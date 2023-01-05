@@ -6,12 +6,12 @@ import (
 	"net/http"
 )
 
-func helloHandler (w http.ResponseWriter, r *http.Request) {
+func helloHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/hello" {
 		http.Error(w, "404 not found", http.StatusNotFound)
 		return
 	}
-	
+
 	if r.Method != "GET" {
 		http.Error(w, "method is not supported", http.StatusNotFound)
 		return
@@ -20,8 +20,15 @@ func helloHandler (w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello! World")
 }
 
-func main () {
+func main() {
 
-	
+	// fileServer := http.FileServer(http.Dir("./static"))
+
+	http.HandleFunc("/hello", helloHandler)
+
+	fmt.Printf("Starting server at port 8080\n")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 
 }
