@@ -30,6 +30,26 @@ func deleteMovie(w http.ResponseWriter, r *http.Request) {}
 func main () {
 	r := mux.NewRouter()
 
+	// appending to the first get request works
+	movies = append(movies, Movie{
+		Id: "1",
+		Isbn: "216039",
+		Title: "Demon Slayer: Infinity train",
+		Director: &Director{
+			FirstName: "Haruo",
+			LastName: "Sotozaki",
+		},
+	})
+	movies = append(movies, Movie{
+		Id: "2",
+		Isbn: "720149",
+		Title: "jujutsu kaisen 0",
+		Director: &Director{
+			FirstName: "Sunghoo",
+			LastName: "Park",
+		},
+	})
+
 	r.HandleFunc("/movies", getMovies).Methods("GET")
 	r.HandleFunc("/movies/{id}", getMovie).Methods("GET")
 	r.HandleFunc("/movies", addMovie).Methods("POST")
